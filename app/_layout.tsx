@@ -1,39 +1,67 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+// import { Stack,Navigator } from "expo-router";
+import {TouchableOpacity, Button, Image, StyleSheet } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Landing from "./pages/Landing/Landing";
+import LeaderboardPage from "./pages/Leaderboard/LeaderboardPage";
+import COLORS from './styles/colors';
+import { useNavigation,NavigationContainer } from '@react-navigation/native';
+const Stack = createNativeStackNavigator();
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
-
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
+function Logo() {
+  const navigation = useNavigation();
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <TouchableOpacity onPress={()=>navigation.navigate('Leaderboard', {})
+  }>
+      <Image
+        style={{
+          width: 35,
+          height: 35,
+          marginBottom: 5,
+          borderRadius: "40%",
+          borderColor: COLORS.text,
+          borderWidth: 1,
+        }}
+      source={require('../assets/images/panda.png')}
+    />
+    </TouchableOpacity>
+  );
+}
+
+function MyBackButton() {
+  const navigation = useNavigation();
+
+  return (
+    <Button
+      title="Back"
+      onPress={() => {
+        //Checks if not home
+        if(!(navigation.getState()?.index == 0)){
+          navigation.goBack()
+        }
+      }}
+    />
+  );
+} 
+
+//Header for all of our pages
+const headerOptions = {
+  headerShown: true,
+  headerTransparent: true,
+  headerStyle: {
+    backgroundColor: '#F9E4BC',
+  },
+  headerLeft: () => MyBackButton(),
+  headerRight: () => Logo(),
+};
+
+export default function RootLayout() {
+  return (
+    <NavigationContainer>
+    <Stack.Navigator screenOptions={headerOptions}>
+      <Stack.Screen name="Home" component={Landing} />
+      <Stack.Screen name="Leaderboard" component={LeaderboardPage}/>
+    </Stack.Navigator>
+    </NavigationContainer>
   );
 }
