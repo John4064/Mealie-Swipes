@@ -1,10 +1,11 @@
 // import { Stack,Navigator } from "expo-router";
-import {TouchableOpacity, Button, Image, StyleSheet } from "react-native";
+import {TouchableOpacity, Button, Image } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Landing from "./pages/Landing/Landing";
 import LeaderboardPage from "./pages/Leaderboard/LeaderboardPage";
 import COLORS from './styles/colors';
 import { useNavigation,NavigationContainer } from '@react-navigation/native';
+
 const Stack = createNativeStackNavigator();
 
 function Logo() {
@@ -58,10 +59,10 @@ const headerOptions = {
 export default function RootLayout() {
   return (
     <NavigationContainer>
-    <Stack.Navigator screenOptions={headerOptions}>
-      <Stack.Screen name="Home" component={Landing} />
-      <Stack.Screen name="Leaderboard" component={LeaderboardPage}/>
-    </Stack.Navigator>
+      <Stack.Navigator screenOptions={headerOptions}>
+        <Stack.Screen name="Home" component={Landing} />
+        <Stack.Screen name="Leaderboard" component={LeaderboardPage}/>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

@@ -1,18 +1,43 @@
-import { View } from "react-native";
-import { Card, Text, Button} from "@rneui/themed";
+import * as React from 'react';
+import { Avatar, Button, Card, Text } from 'react-native-paper';
 
-export default function RecipeCard({ data }: { data: any }) {
-  return (
-    <Card>
-      <Text>Word of the Day</Text>
-      <Text h4>be-nev-o=lent</Text>
-      <Text>adjective</Text>
-      <Text>
-        well meaning and kindly.
-      </Text>
-      <Button size="sm" type="clear">
-        Learn More
-      </Button>
-    </Card>
-  );
+// Define the props type for LeftContent
+interface LeftContentProps {
+  size?: number; // You can add other props as needed
 }
+
+//Update this with the DTO of mealie api
+interface RecipeCardData{
+    name: string;
+    title: string;
+    content: string;
+}
+
+interface RecipeCardProps {
+    data: RecipeCardData;
+}
+
+
+
+// Define the LeftContent component with typed props
+const LeftContent: React.FC<LeftContentProps> = (props) => (
+  <Avatar.Icon {...props} icon="folder" />
+);
+
+// Define the MyComponent component
+const RecipeCard: React.FC<RecipeCardProps> = ({data}) => (
+  <Card>
+    <Card.Title title={data.title} subtitle="Card Subtitle" left={LeftContent} />
+    <Card.Content>
+      <Text variant="titleLarge">Card title</Text>
+      <Text variant="bodyMedium">Card content</Text>
+    </Card.Content>
+    <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+    <Card.Actions>
+      <Button>Cancel</Button>
+      <Button>Ok</Button>
+    </Card.Actions>
+  </Card>
+);
+
+export default RecipeCard;

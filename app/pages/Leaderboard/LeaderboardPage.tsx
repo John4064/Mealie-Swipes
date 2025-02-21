@@ -3,7 +3,7 @@ import { Text,View, FlatList, Dimensions, StyleSheet } from 'react-native';
 import COLORS from '../../styles/colors';
 
 
-const styles = StyleSheet.create({
+const Styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: COLORS.background,
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
 export default function LeaderboardPage() {
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Leaderboard Page</Text>
+    <View style={Styles.container}>
+      <Text style={Styles.text}>Leaderboard Page</Text>
     </View>
   );
 }
