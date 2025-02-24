@@ -47,6 +47,7 @@ function MyBackButton() {
 
 //Header for all of our pages
 const headerOptions = {
+  
   headerShown: true,
   headerTransparent: true,
   headerStyle: {

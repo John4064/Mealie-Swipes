@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Avatar, Button, Card, Text } from 'react-native-paper';
-
+import { TouchableOpacity } from 'react-native';
 // Define the props type for LeftContent
 interface LeftContentProps {
   size?: number; // You can add other props as needed
@@ -8,7 +8,7 @@ interface LeftContentProps {
 
 //Update this with the DTO of mealie api
 interface RecipeCardData{
-    name: string;
+    source: string;
     title: string;
     content: string;
 }
@@ -21,21 +21,21 @@ interface RecipeCardProps {
 
 // Define the LeftContent component with typed props
 const LeftContent: React.FC<LeftContentProps> = (props) => (
-  <Avatar.Icon {...props} icon="folder" />
+        <TouchableOpacity onPress={()=>console.log(3)} >
+    <Avatar.Icon {...props} icon="biohazard" />
+  </TouchableOpacity>
 );
 
 // Define the MyComponent component
 const RecipeCard: React.FC<RecipeCardProps> = ({data}) => (
-  <Card>
-    <Card.Title title={data.title} subtitle="Card Subtitle" left={LeftContent} />
+  <Card style={{borderRadius:'10%',marginTop: '24%', minWidth: '98%', minHeight: '98%'}}>
+    <Card.Title titleVariant={"titleLarge"} title={data.title} left={LeftContent} />
     <Card.Content>
-      <Text variant="titleLarge">Card title</Text>
-      <Text variant="bodyMedium">Card content</Text>
+      <Text>{data.source}</Text>
     </Card.Content>
-    <Card.Cover source={{ uri: 'https://picsum.photos/700' }} />
+    <Card.Cover height={200} source={{ uri: 'https://picsum.photos/700' }} />
     <Card.Actions>
-      <Button>Cancel</Button>
-      <Button>Ok</Button>
+      <Button mode="contained-tonal" onPress={() => console.log('Pressed')} style={{alignItems: 'center', justifyContent: 'center', display: 'flex'}}>Link</Button>
     </Card.Actions>
   </Card>
 );
