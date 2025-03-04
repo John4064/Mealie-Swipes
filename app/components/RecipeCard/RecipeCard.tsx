@@ -1,43 +1,39 @@
 import * as React from "react";
-// import { Avatar, Button, Card, Text } from "react-native-paper";
-import { View,StyleSheet, TouchableOpacity } from "react-native";
-import { Avatar,Card, Title, Paragraph, Chip, IconButton } from 'react-native-paper';
+import { Alert,Share,View,StyleSheet } from "react-native";
+import { Card, Title, Paragraph, Chip, IconButton } from 'react-native-paper';
+import { RecipeCardData } from "@/app/types/Recipe";
 
-
-
-// Define the props type for LeftContent
-interface LeftContentProps {
-  size?: number; // You can add other props as needed
-}
-
-//Update this with the DTO of mealie api
-interface RecipeCardData {
-  source: string;
-  name: string;
-  description: string;
-  imageUrl: string;
-  cookTime: number;
-  tags: [string];
-}
-
+//Params for Recipe Card
 interface RecipeCardProps {
   data: RecipeCardData;
 }
+const onShare = async (imageUrl: string) => {
+  try {
+    const result = await Share.share({
+      message:
+        imageUrl,
+    });
+    if (result.action === Share.sharedAction) {
+      if (result.activityType) {
+        // shared with activity type of result.activityType
+      } else {
+        // shared
+      }
+    } else if (result.action === Share.dismissedAction) {
+      // dismissed
+    }
+  } catch (error: any) {
+    Alert.alert(error.message);
+  }
+};
 
-//{ uri: 'https://picsum.photos/203' }
 
-// Define the LeftContent component with typed props
-const LeftContent: React.FC<LeftContentProps> = (props) => (
-  <TouchableOpacity onPress={() => console.log(3)}>
-    <Avatar.Icon {...props} icon="biohazard" />
-  </TouchableOpacity>
-);  
 
 const RecipeCard: React.FC<RecipeCardProps> = ({ data }) => {
-  const recipe = data.recipe;  // Extract the recipe from the data prop
+  const recipe = data;  // Extract the recipedata from the data prop of RecipeCardProps
   return(
     <Card style={styles.card}>
-      <Card.Cover source={require('../../../assets/images/shrimp.jpg')} />
+      <Card.Cover  source={require('../../../assets/images/shrimp.jpg')} />
       <View style={styles.timeContainer}>
         <Chip icon="clock" mode="outlined">{recipe?.cookTime} mins</Chip>
       </View>
@@ -48,24 +44,24 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ data }) => {
             <Chip key={tag} style={styles.tag}>{tag}</Chip>
           ))}
         </View>
-        <Paragraph numberOfLines={3}>{recipe?.description}</Paragraph>
+        <Paragraph numberOfLines={15}>{recipe?.description}</Paragraph>
       </Card.Content>
       <Card.Actions style={styles.actions}>
-        <IconButton
-          icon="heart"
-          size={20}
-          onPress={() => console.log(recipe)}
-        />
-        <IconButton
-          icon="share-variant"
-          size={20}
-          onPress={() => console.log('Share')}
-        />
-        <IconButton
-          icon="book-open-variant"
-          size={20}
-          onPress={() => console.log('View Recipe')}
-        />
+          <IconButton
+            icon="heart"
+            size={20}
+            onPress={() => console.log(recipe)}
+          />
+          <IconButton
+            icon="share-variant"
+            size={20}
+            onPress={() => onShare(recipe?.imageUrl)}
+          />
+          <IconButton
+            icon="book-open-variant"
+            size={20}
+            onPress={() => console.log('View Recipe')}
+          />
       </Card.Actions>
     </Card>
     );
@@ -75,8 +71,14 @@ const styles = StyleSheet.create({
   card: {
     margin: 8,
     elevation: 4,
-    marginTop: '50%', // This will push the card down by 20% of the screen height
+    marginTop: '26%', // This will push the card down by 20% of the screen height
     minWidth: '94%',
+    minHeight: '94%',
+    //Temp
+    // display: 'flex',
+    // flexDirection: 'column',
+    // justifyContent: 'flex-end'
+
   },
   timeContainer: {
     position: 'absolute',
@@ -96,6 +98,8 @@ const styles = StyleSheet.create({
   },
   actions: {
     justifyContent: 'space-around',
+    borderColor: 'red',
+    borderWidth: 2,
   },
 });
 

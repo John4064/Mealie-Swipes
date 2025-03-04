@@ -5,7 +5,7 @@ import Landing from "./pages/Landing/Landing";
 import LeaderboardPage from "./pages/Leaderboard/LeaderboardPage";
 import COLORS from './styles/colors';
 import { useNavigation,NavigationContainer } from '@react-navigation/native';
-
+import { useEffect,useState } from "react";
 const Stack = createNativeStackNavigator();
 
 function Logo() {
@@ -29,22 +29,6 @@ function Logo() {
   );
 }
 
-function MyBackButton() {
-  const navigation = useNavigation();
-
-  return (
-    <Button
-      title="Back"
-      onPress={() => {
-        //Checks if not home
-        if(!(navigation.getState()?.index == 0)){
-          navigation.goBack()
-        }
-      }}
-    />
-  );
-} 
-
 //Header for all of our pages
 const headerOptions = {
   
@@ -53,11 +37,19 @@ const headerOptions = {
   headerStyle: {
     backgroundColor: '#F9E4BC',
   },
-  headerLeft: () => MyBackButton(),
   headerRight: () => Logo(),
 };
 
 export default function RootLayout() {
+  const [jwtToken, setJwtToken] = useState(1);
+
+  useEffect(() => {
+    console.log("RUNNING");
+
+    return () => console.log(4);
+  }, [jwtToken]);
+
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={headerOptions}>
