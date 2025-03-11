@@ -9,7 +9,7 @@ const Styles = StyleSheet.create({
       backgroundColor: COLORS.background,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingBottom: '25%'
+      // paddingBottom: '25%'
     },
     text: {
       color: COLORS.text,
@@ -18,6 +18,7 @@ const Styles = StyleSheet.create({
 
 
 export default function LeaderboardPage() {
+  
 
   return (
     <View style={Styles.container}>

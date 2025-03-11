@@ -1,10 +1,11 @@
-import React from 'react';
-import {View, StyleSheet } from 'react-native';
+import React,{useContext} from 'react';
+import {View, StyleSheet, Text } from 'react-native';
 import COLORS from '../../styles/colors';
 import {useNavigation} from '@react-navigation/native';
 import RecipeCard from '@/app/components/RecipeCard/RecipeCard';
 import { FAB } from 'react-native-paper';
 import { RecipeCardData } from "@/app/types/Recipe";
+import { GlobalContext } from '@/app/contexts/GlobalContext';
 
 const Styles = StyleSheet.create({
   heartfab: {
@@ -14,11 +15,8 @@ const Styles = StyleSheet.create({
     margin: 48
   },
   container: {
-    flex: 1,
     backgroundColor: COLORS.background,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    paddingBottom: '25%'
+    height: '100%'
   },
   text: {
     color: COLORS.text,
@@ -32,6 +30,16 @@ const Styles = StyleSheet.create({
 //Home Landing Page
 export default function Landing() {
 
+  const { jwtToken, setJwtToken } = useContext(GlobalContext);
+  const changeGlobalVar = (val: any) => {
+    setJwtToken(val);
+  };
+  // console.log(jwtToken)
+
+//      <FAB icon="plus" style={Styles.heartfab} onPress={() => changeGlobalVar("new value")} />
+
+
+
   //Replace this in future ofc
   const cardItem: RecipeCardData = {
     source: "AllRecipes",
@@ -41,13 +49,11 @@ export default function Landing() {
     cookTime: 20,
     tags: ['cheese','carb'],
   };
-
   
   return (
     <View style={Styles.container}>
       {/* Main Card */}
       <RecipeCard data={cardItem}></RecipeCard>
-
     </View>
   );
 }

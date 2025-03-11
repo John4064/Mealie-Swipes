@@ -1,25 +1,30 @@
-//First 
+import axios from "axios";
 
-//https://mealie.code-catalyst.com/api/auth/token
+const baseUrl = process.env.EXPO_PUBLIC_BASEURL;
 
-//  -H 'accept: application/json' \
-//-H 'Content-Type: application/x-www-form-urlencoded' \
-//  -H 'Authorization: Bearer token'
-//  -d 'username=username&password=password&remember_me=false'
-
-
-import axios from 'axios';
-
-const baseUrl = "https://mealie.code-catalyst.com/api"
-
-function generateToken(){
-
-    // Passing configuration object to axios
-    axios({
-        method: 'post',
-        url: `${baseUrl}/auth/token`,
-    }).then((response) => {
-        console.log(response.data);
+export async function generateToken(): Promise<string> {
+  var postData = {
+    username: process.env.EXPO_PUBLIC_USER,
+    password: process.env.EXPO_PUBLIC_PASS,
+  };
+  var tempAccessToken: string = "";
+  // Passing configuration object to axios
+  await axios({
+    method: "post",
+    url: `${baseUrl}/auth/token`,
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json",
+    },
+    data: postData,
+  })
+    .then((response) => {
+      tempAccessToken = response.data.access_token;
+    })
+    .catch((error) => {
+      console.log("error");
+      console.log(error);
+      return "";
     });
-    
+  return tempAccessToken;
 }

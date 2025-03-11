@@ -27,13 +27,42 @@ const onShare = async (imageUrl: string) => {
   }
 };
 
+const styles = StyleSheet.create({
+  card: {
+    margin: 4,
+    elevation: 5,
+    // marginTop: '50%', // This will push the card down by 20% of the screen height
+    marginTop: '30%',
+    minWidth: '92%',
+  },
+  timeContainer: {
+    position: 'absolute',
+    top: 16,
+    right: 16,
+    backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    borderRadius: 16,
+  },
+  tagsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginVertical: 8,
+  },
+  tag: {
+    marginRight: 4,
+    marginBottom: 4,
+  },
+  actions: {
+    // borderColor: 'red',
+    // borderWidth: 2,
 
+    },
+});
 
 const RecipeCard: React.FC<RecipeCardProps> = ({ data }) => {
   const recipe = data;  // Extract the recipedata from the data prop of RecipeCardProps
   return(
-    <Card style={styles.card}>
-      <Card.Cover  source={require('../../../assets/images/shrimp.jpg')} />
+    <Card  style={styles.card} >
+      <Card.Cover   style={{ height: '50%' }} source={require('../../../assets/images/shrimp.jpg')} />
       <View style={styles.timeContainer}>
         <Chip icon="clock" mode="outlined">{recipe?.cookTime} mins</Chip>
       </View>
@@ -44,9 +73,14 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ data }) => {
             <Chip key={tag} style={styles.tag}>{tag}</Chip>
           ))}
         </View>
-        <Paragraph numberOfLines={15}>{recipe?.description}</Paragraph>
+        <Paragraph numberOfLines={10}>{recipe?.description}</Paragraph>
+
+
+        {/* <View style={{'minHeight': '25%'}}></View> */}
+
       </Card.Content>
-      <Card.Actions style={styles.actions}>
+
+        <Card.Actions style={styles.actions}>
           <IconButton
             icon="heart"
             size={20}
@@ -62,45 +96,11 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ data }) => {
             size={20}
             onPress={() => console.log('View Recipe')}
           />
-      </Card.Actions>
+        </Card.Actions>
     </Card>
     );
 }
 
-const styles = StyleSheet.create({
-  card: {
-    margin: 8,
-    elevation: 4,
-    marginTop: '26%', // This will push the card down by 20% of the screen height
-    minWidth: '94%',
-    minHeight: '94%',
-    //Temp
-    // display: 'flex',
-    // flexDirection: 'column',
-    // justifyContent: 'flex-end'
 
-  },
-  timeContainer: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    borderRadius: 16,
-  },
-  tagsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginVertical: 8,
-  },
-  tag: {
-    marginRight: 4,
-    marginBottom: 4,
-  },
-  actions: {
-    justifyContent: 'space-around',
-    borderColor: 'red',
-    borderWidth: 2,
-  },
-});
 
 export default RecipeCard;

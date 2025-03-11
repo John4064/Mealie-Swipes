@@ -1,61 +1,13 @@
 // import { Stack,Navigator } from "expo-router";
-import {TouchableOpacity, Button, Image } from "react-native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Landing from "./pages/Landing/Landing";
-import LeaderboardPage from "./pages/Leaderboard/LeaderboardPage";
-import COLORS from './styles/colors';
-import { useNavigation,NavigationContainer } from '@react-navigation/native';
-import { useEffect,useState } from "react";
-const Stack = createNativeStackNavigator();
 
-function Logo() {
-  const navigation = useNavigation();
-
-  return (
-    <TouchableOpacity onPress={()=>navigation.navigate('Leaderboard', {})
-  }>
-      <Image
-        style={{
-          width: 35,
-          height: 35,
-          marginBottom: 5,
-          borderRadius: "40%",
-          borderColor: COLORS.text,
-          borderWidth: 1,
-        }}
-      source={require('../assets/images/panda.png')}
-    />
-    </TouchableOpacity>
-  );
-}
-
-//Header for all of our pages
-const headerOptions = {
-  
-  headerShown: true,
-  headerTransparent: true,
-  headerStyle: {
-    backgroundColor: '#F9E4BC',
-  },
-  headerRight: () => Logo(),
-};
+import {GlobalProvider} from './contexts/GlobalContext';
+import Main from "./pages/Main";
 
 export default function RootLayout() {
-  const [jwtToken, setJwtToken] = useState(1);
-
-  useEffect(() => {
-    console.log("RUNNING");
-
-    return () => console.log(4);
-  }, [jwtToken]);
-
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={headerOptions}>
-        <Stack.Screen name="Home" component={Landing} />
-        <Stack.Screen name="Leaderboard" component={LeaderboardPage}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <GlobalProvider>
+        <Main/>
+    </GlobalProvider>
   );
 }
