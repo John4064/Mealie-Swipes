@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { GlobalContext } from "../contexts/GlobalContext";
-import { useEffect,useState } from "react";
+import { useEffect } from "react";
 import {generateToken} from '@/app/actions/AuthActions';
 import { View, ActivityIndicator } from "react-native";
 import {TouchableOpacity, Button, Image } from "react-native";
